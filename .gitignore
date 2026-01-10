@@ -1,0 +1,114 @@
+# R specific
+.Rhistory
+.RData
+.Rproj.user
+*.Rproj
+
+# Data files (large files - download via scripts)
+data/*.csv
+data/*.rds
+data/*.feather
+
+# Keep directory structure
+!data/.gitkeep
+
+# Visualizations (generated files)
+visualizations/**/*.png
+visualizations/**/*.pdf
+visualizations/**/*.jpg
+
+# Keep directory structure
+!visualizations/.gitkeep
+!visualizations/diagnostics/.gitkeep
+!visualizations/composites/.gitkeep
+
+# USER EXCLUSIONS - Specific files/folders to exclude
+# Exclude scripts 11 and 12
+scripts/11_create_instantly_understandable_viz.R
+scripts/12_create_final_instant_viz.R
+
+# Exclude final visualizations folder
+visualizations/final/
+visualizations/final/**
+
+# Exclude specific documentation files
+GITHUB_SETUP.md
+TECHNICAL_REPORT.md
+TIME_SERIES_GUIDE.md
+VISUALIZATION_GALLERY.md
+VISUALIZATION_STRATEGY.md
+API_RESEARCH.md
+MULTIVARIATE_APPROACH.md
+
+# Reports (generated files)
+reports/*.txt
+reports/*.csv
+reports/*.html
+
+# Keep directory structure
+!reports/.gitkeep
+
+# R package development
+*.tar.gz
+*.Rcheck/
+vignettes/*.html
+vignettes/*.pdf
+
+# Temporary files
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# IDE specific
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS specific
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# R library directory (if local)
+R_libs/
+
+# Logs
+*.log
+
+# Backup files
+*.bak
+*.backup
+*_backup.*
+
+# Sensitive information
+.env
+.Renviron
+credentials.R
+api_keys.R
+
+# Cache
+cache/
+.cache/
+
+# Output files
+output/
+results/
+
+# Documentation builds
+docs/_build/
+site/
+
+# Python (if using rpy2 or similar)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
