@@ -1,6 +1,6 @@
 # 📉 Quantifying Policy Impact: Sheffield Clean Air Zone Analysis
 
-[![R](https://img.shields.io/badge/Made%20with-R-4.5.2-blue.svg)](https://www.r-project.org/)
+[![R](https://img.shields.io/badge/R-4.5.2-276DC3.svg?logo=r&logoColor=white)](https://www.r-project.org/)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Complete-success.svg)]()
 
