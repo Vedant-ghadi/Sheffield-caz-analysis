@@ -13,9 +13,9 @@ data/*.feather
 !data/.gitkeep
 
 # Visualizations (generated files)
-visualizations/**/*.png
-visualizations/**/*.pdf
-visualizations/**/*.jpg
+# visualizations/**/*.png  <-- Unhidden
+# visualizations/**/*.pdf  <-- Unhidden
+# visualizations/**/*.jpg  <-- Unhidden
 
 # Keep directory structure
 !visualizations/.gitkeep
