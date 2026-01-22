@@ -10,14 +10,17 @@
 
 ## 📊 Executive Summary
 
-This study employs **counterfactual inference** and **interrupted time series (ITS) regression** to quantify the impact of the Sheffield Clean Air Zone implemented on February 27, 2023.
+This study employs **counterfactual inference** and **interrupted time series (ITS) regression** to quantify the impact of the Sheffield Clean Air Zone implemented on February 27, 2023. By analyzing **35,064 hourly observations** (Jan 2022 – Dec 2025) and controlling for seasonality and exogenous factors, this analysis demonstrates a statistically significant reduction in traffic-related pollution.
 
-By analyzing **35,064 hourly observations** (Jan 2022 – Dec 2025) and controlling for seasonality and exogenous factors, this analysis demonstrates a statistically significant reduction in traffic-related pollution.
+### 🏆 Key Findings
 
-**Key Results:**
-*   **Significance:** The intervention caused a statistically observable structural break in NO₂ levels (**p < 0.001**).
-*   **Magnitude:** Estimated reduction of **30%–44%** compared to the counterfactual baseline.
-*   **Trend:** Immediate level drop followed by a sustained downward trajectory.
+*   **Significant Reduction:** The CAZ intervention drove a **41% weather-normalised reduction** in NO₂ concentrations.
+*   **Structural Break:** Statistical testing confirms a highly significant structural break ($p < 0.001$) at the intervention date.
+*   **Weather Robustness:** Results hold even after accounting for wind speed, temperature, and precipitation using XGBoost.
+*   **Model Agreement:** 
+    *   **ITS Regression:** Estimated -2.35 µg/m³ immediate drop.
+    *   **Prophet Forecast:** Observed values 44.2% below counterfactual baseline.
+    *   **ARIMA Baseline:** Observed values 29.9% below baseline.
 
 ![Executive Summary](visualizations/composites/05_executive_summary.png)
 
@@ -25,60 +28,64 @@ By analyzing **35,064 hourly observations** (Jan 2022 – Dec 2025) and controll
 
 ## 🔬 Technical Methodology
 
-To ensure robustness, this analysis utilizes a multi-model approach to isolate the policy effect from natural variation (weather, seasonality, and secular trends).
+To ensure robustness, this analysis utilizes a multi-model approach to isolate the policy effect from natural variation.
 
 ### 1. Baseline Forecasting (ARIMA & Prophet)
-*   **Objective:** Construct a counterfactual "business as usual" baseline based on pre-intervention dynamics.
-*   **Specification:** `SARIMA` for linear autocorrelation and `Prophet` for complex multi-seasonal patterns.
-*   **Result:** Actual post-intervention NO₂ levels diverged significantly below both forecasts.
+Constructed a "business as usual" counterfactual based on pre-intervention dynamics. The **Prophet** model captured complex multi-seasonal patterns (yearly, weekly), revealing that traditional ARIMA methods may underestimate the effect size when strong seasonalities are present.
 
 ### 2. Machine Learning Weather Normalisation (XGBoost)
-*   **Objective:** Remove meteorological confounding (wind speed, direction, temperature, precipitation) using non-linear gradient boosting.
-*   **Result:** Confirmed that the reduction was driven by emissions changes, not favorable weather.
+Used Gradient Boosting to model non-linear relationships between weather (wind, temperature) and pollution. This proved that the reduction was driven by emissions changes, not favorable weather conditions.
 
 ### 3. Interrupted Time Series (ITS) Regression
-*   **Objective:** Formally test for causal structural breaks using segmented regression.
-*   **Model:** $Y_t = \beta_0 + \beta_1 T + \beta_2 D + \beta_3 P + \epsilon_t$
-    *   $D$ (Intervention): Immediate level change ($\beta_2 = -2.35$, $p=0.002$)
-    *   $P$ (Time since intervention): Slope change ($\beta_3 = -0.014$, $p<0.001$)
-*   **Conclusion:** The policy resulted in both an immediate drop and an accelerated rate of improvement.
-
-### 4. Deep Learning Forecasting (LSTM)
-*   **Objective:** Capture complex non-linear temporal dependencies for high-precision forecasting.
+Formal statistical test for causal structural breaks.
+*   **Level Change:** Immediate drop ($\beta_2 = -2.35$, $p<0.01$).
+*   **Trend Change:** Accelerated rate of improvement ($\beta_3 = -0.014$, $p<0.001$).
 
 ---
 
-## 💻 Reproducible Workflow
+## 🚀 How to Run the Analysis
 
-This repository contains a fully reproducible R pipeline designed for environmental policy auditing. The analysis flows sequentially from data extraction to final reporting.
+This repository contains a fully reproducible R pipeline. Follow these steps to replicate the study:
 
 ### Prerequisites
 *   **Language**: R (v4.5.2+)
 *   **Key Libraries**: `forecast`, `prophet`, `xgboost`, `keras3`, `tidyverse`, `zoo`, `lmtest`
 
-### Pipeline Structure
-
-**Data Engineering:**
-1.  **`scripts/01_extract_air_quality.R`**: Extract hourly air quality data from Open-Meteo API.
-2.  **`scripts/02_extract_weather_merge.R`**: Extract hourly weather data and merge with air quality dataset.
-3.  **`scripts/03_eda_weather_pollution.R`**: Exploratory data analysis and correlation assessments.
-
-**Modelling:**
-4.  **`scripts/04_model_arima_baseline.R`**: Univariate time series baselining.
-5.  **`scripts/05_model_prophet.R`**: Seasonality-aware forecasting.
-6.  **`scripts/06_model_xgboost.R`**: Weather-normalised machine learning assessment.
-7.  **`scripts/07_model_its.R`**: Causal impact segmentation analysis.
-8.  **`scripts/08_model_lstm.R`**: Long Short-Term Memory network implementation.
-
-**Reporting:**
-9.  **`scripts/09_viz_composites.R`**: Generate high-level composite visualizations.
-10. **`scripts/10_viz_gallery.R`**: Create gallery of diagnostic and summary plots.
-
-To replicate the study, clone the repository and execute the scripts in numerical order.
+### Execution Guide
+Run the scripts in the `scripts/` folder in numerical order:
 
 ```bash
-git clone https://github.com/Vedant-ghadi/sheffield-caz-analysis.git
+git clone https://github.com/Vedant-ghadi/Sheffield-caz-analysis.git
 ```
+
+1.  **Data Extraction (Scripts 01-02):**
+    *   `01_extract_air_quality.R`: Fetches hourly pollution data from Open-Meteo API.
+    *   `02_extract_weather_merge.R`: Retreives historical weather data and merges datasets.
+
+2.  **Analysis & Modelling (Scripts 03-08):**
+    *   `03_eda_weather_pollution.R`: Generates initial exploratory plots.
+    *   `04_model_arima_baseline.R` & `05_model_prophet.R`: Trains baseline forecasting models.
+    *   `06_model_xgboost.R`: Performs weather normalisation.
+    *   `07_model_its.R`: Runs the Causal Impact regression.
+    *   `08_model_lstm.R`: (Experimental) Deep learning forecast.
+
+3.  **Reporting (Scripts 09-10):**
+    *   `09_viz_composites.R`: Generates the final composite figures for the report.
+    *   `10_viz_gallery.R`: Creates supplementary diagnostic plots.
+
+---
+
+## 📉 Visualization Gallery
+
+### The Structural Break
+The dashboard below visualizes the raw time series against the intervention timeline. Note the clear shift in the data distribution post-February 2023.
+
+![CAZ Impact Dashboard](visualizations/composites/01_caz_impact_dashboard.png)
+
+### Forecast vs. Actuals
+The divergence between the **counterfactual forecast (dotted)** and **observed data (solid)** represents the "clean air dividend" generated by the policy.
+
+![Model Comparison](visualizations/composites/02_model_forecast_comparison.png)
 
 ---
 
@@ -86,8 +93,6 @@ git clone https://github.com/Vedant-ghadi/sheffield-caz-analysis.git
 
 **Vedant Ghadigaonkar**  
 *Data Scientist | Time Series Analysis | Policy Evaluation*
-
-A data science professional focused on leveraging advanced statistical modeling to solve complex real-world problems. Experienced in building reproducible analytical pipelines, causal inference, and translating data into actionable strategic insights.
 
 *   **GitHub**: [@Vedant-ghadi](https://github.com/Vedant-ghadi)
 *   **LinkedIn**: [Vedant Ghadigaonkar](https://www.linkedin.com/in/vedant-ghadigaonkar-2bb022231/)
