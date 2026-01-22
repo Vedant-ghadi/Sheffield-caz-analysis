@@ -9,29 +9,16 @@ data/*.csv
 data/*.rds
 data/*.feather
 
-# Keep directory structure
-!data/.gitkeep
-
-# Visualizations (generated files)
-# visualizations/**/*.png  <-- Unhidden
-# visualizations/**/*.pdf  <-- Unhidden
-# visualizations/**/*.jpg  <-- Unhidden
-
-# Keep directory structure
-!visualizations/.gitkeep
-!visualizations/diagnostics/.gitkeep
-!visualizations/composites/.gitkeep
-
 # USER EXCLUSIONS - Specific files/folders to exclude
-# Exclude scripts 11 and 12
+# Exclude scripts 11 and 12 (Visualization experiments)
 scripts/11_create_instantly_understandable_viz.R
 scripts/12_create_final_instant_viz.R
 
-# Exclude final visualizations folder
+# Exclude final visualizations folder (Large generated images)
 visualizations/final/
 visualizations/final/**
 
-# Exclude specific documentation files
+# Exclude specific documentation files (Notes/Research)
 GITHUB_SETUP.md
 TECHNICAL_REPORT.md
 TIME_SERIES_GUIDE.md
@@ -39,11 +26,21 @@ VISUALIZATION_GALLERY.md
 VISUALIZATION_STRATEGY.md
 API_RESEARCH.md
 MULTIVARIATE_APPROACH.md
+ACADEMIC_REFERENCES_ANNOTATED.md
+REFERENCES_WITH_LINKS.md
+PHASE_2_README.md
+PUSH_TO_GITHUB.md
 
-# Reports (generated files)
-reports/*.txt
-reports/*.csv
-reports/*.html
+# Reports and Drafts (Strict Exclusion)
+*_REPORT.md
+*DRAFT.md
+*.docx
+*.html
+reports/
+reports/*
+IJC437_*.md
+FINAL_SECTIONS_DRAFT.md
+ACADEMIC_REPORT.md
 
 # Keep directory structure
 !reports/.gitkeep
