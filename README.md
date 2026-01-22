@@ -14,13 +14,11 @@ This study employs **counterfactual inference** and **interrupted time series (I
 
 ### 🏆 Key Findings
 
-*   **Significant Reduction:** The CAZ intervention drove a **41% weather-normalised reduction** in NO₂ concentrations.
-*   **Structural Break:** Statistical testing confirms a highly significant structural break ($p < 0.001$) at the intervention date.
-*   **Weather Robustness:** Results hold even after accounting for wind speed, temperature, and precipitation using XGBoost.
-*   **Model Agreement:** 
-    *   **ITS Regression:** Estimated -2.35 µg/m³ immediate drop.
-    *   **Prophet Forecast:** Observed values 44.2% below counterfactual baseline.
-    *   **ARIMA Baseline:** Observed values 29.9% below baseline.
+*   **CAZ Effectiveness (Section 3.1.4):** Sheffield CAZ achieved a reduction in NO₂ of **2.35 μg/m³** in the concentration itself (p = 0.002) and reduced the rate of pollution accumulation by **0.014 μg/m³/day** (p < 0.001).
+*   **Weather-Robust (Section 3.1.3):** Results after weather normalization indicate a **41.0%** causal policy effect, confirming that the reduction was driven by emissions changes rather than meteorological favorability.
+*   **Multi-Model Consistency (Section 3.2.1):** Five independent models (ARIMA, Prophet, XGBoost, ITS, LSTM) demonstrate strong NO₂ decreases, which enhances causal inferences through triangulation.
+*   **XGBoost Lead (Section 3.1.3):** Gradient boosting with engineered features achieves the best predictive results (**RMSE 4.03**), significantly outperforming univariate ARIMA (**RMSE 8.38**).
+*   **Health Translation (Section 3.2.3):** The **9.1 μg/m³** change in the mean concentration of NO₂ is associated with a **3.6% reduction** in pollution-attributable mortality risk for the local population.
 
 ![Executive Summary](visualizations/composites/05_executive_summary.png)
 
